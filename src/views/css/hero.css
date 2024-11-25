@@ -1,0 +1,23 @@
+.btn-lokasi {
+  font-size: 1.02rem;
+  font-weight: 500; /* Ganti 'medium' dengan nilai numerik (500) */
+  letter-spacing: 1px;
+  border-radius: 7px;
+  padding: 9px 20px;
+  color: white;
+  background-color: #bf252b;
+  transition: background-color 0.2s, color 0.2s; /* Menambahkan transisi untuk efek halus */
+}
+
+.btn-lokasi:hover {
+  background-color: #c2353a;
+  color: white;
+}
+
+.btn-lokasi:focus,
+.btn-lokasi:active {
+  background-color: #bf252b; /* Warna yang sedikit lebih gelap untuk klik */
+  color: white;
+  outline: none; /* Menghapus outline default */
+  box-shadow: none; /* Menghapus efek shadow saat aktif */
+}

@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: 10;
+  
+}
+
+p{
+  font-size: 1rem;
+  font-weight: 100;
+  margin-top: 20px;
+}
+
+.gedA-con {
+  background-color: #f8f8f8;
+}
+
+.gedungA-container {
+  display: flex;
+}
+
+.content-container {
+  flex: 1;
+  padding: 10px;
+}
+
+.room-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f8f8f8;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 19px;
+  justify-content: center;
+  border-radius: 13px;
+  gap: 15px;
+}
+
+.room-box {
+  border: 1px solid #dee2e6; /* Border */
+  padding: 15px;
+  width: 150px; /* Lebar setiap room */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+  border-radius: 6px; /* Sudut tumpul */
+  text-align: center; /* Teks ditengah */
+  cursor: pointer;
+}
+
+.room-box h5 {
+  margin-bottom: 0;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 100;
+}
+
+.room-box p {
+  margin: 0;
+  font-size: 11px;
+  color: #6c757d;
+}

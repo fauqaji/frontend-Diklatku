@@ -1,0 +1,178 @@
+/* Animasi slide dari kiri ke kanan */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.detail-jud-atas {
+  font-size: 1.7rem;
+  font-weight: bold;
+  word-spacing: 10px;
+  letter-spacing: 3px;
+  width: 100%;
+  display: inline-block;
+  opacity: 0; /* Awalnya tersembunyi */
+  margin: 0;
+}
+
+.animate-slide {
+  animation: slideInLeft 0.6s ease-out forwards; /* Mulai animasi */
+  opacity: 1; /* Tampilkan elemen */
+}
+
+.garis-detail {
+  border: none; /* Hilangkan border default */
+  border-top: 2px solid; /* Warna hitam tegas */
+  opacity: 1; /* Pastikan tidak ada transparansi */
+  color: black; /* Tentukan warna */
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(28%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.detail-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 9px 4px rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 0;
+  min-height: 450px;
+  opacity: 0;
+}
+
+.animate-card .detail-card {
+  animation: slideInUp 0.55s ease-out forwards;
+  opacity: 1;
+}
+
+.card-img-atas {
+  width: 100%; /* Atur tinggi sesuai kebutuhan */
+  overflow: hidden; /* Agar gambar tidak keluar dari batas */
+}
+
+.card-img-custom {
+  width: 100%; /* Mengisi lebar penuh */
+  height: 190px; /* Atur tinggi agar seragam di semua kartu, sesuaikan nilainya */
+  object-fit: cover;
+  border-bottom: none;
+}
+
+.card-img-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  min-height: 190px;
+  height: 190px;
+  position: absolute;
+  bottom: 0;
+  padding: 10px; /* Memberi sedikit padding untuk ruang di sekitar teks */
+  display: flex;
+  align-items: flex-end; /* Memastikan teks berada di bawah */
+}
+
+.overlay-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+}
+
+.card-body-detail {
+  background-color: #25282f;
+  border-top: none;
+  border-bottom: none;
+}
+
+.card-body-detail .card-text {
+  color: #ffffff;
+}
+
+.text-detail {
+  font-size: 0.7rem;
+  text-align: justify;
+}
+
+.harga-fasi {
+  font-size: 1rem;
+}
+
+.harga-satuan sub {
+  vertical-align: sub; /* Tempatkan teks sedikit lebih rendah */
+  color: #808080; /* Atur warna jika diperlukan */
+}
+
+.jum-unit {
+  color: #808080; /* Atur warna jika diperlukan */
+  font-size: 0.75rem; /* Sesuaikan ukuran teks */
+  bottom: 10.6rem;
+  position: absolute;
+}
+
+.card-foo-detail {
+  background-color: #25282f !important; /* Warna latar belakang yang lebih gelap */
+  color: #ffffff; /* Warna teks putih agar terlihat pada latar belakang gelap */
+  padding: 15px; /* Beri jarak agar tampilan lebih baik */
+  margin: 0px;
+  border-top: none;
+  text-align: center;
+}
+.btn-update,
+.btn-pesan {
+  background-color: #ffaf45;
+  color: #25282f;
+  padding: 7px 25px;
+  font-weight: 500;
+  font-size: medium;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s; /* Menambahkan animasi */
+}
+
+.btn-update:hover,
+.btn-pesan:hover {
+  background-color: #ffb95d; /* Warna latar berubah */
+  color: #25282f; /* Tetap gunakan warna teks yang kontras */
+}
+
+.btn-update:active,
+.btn-pesan:active,
+.btn-update:focus,
+.btn-pesan:focus {
+  background-color: #ffaf45; /* Kembali ke warna semula setelah klik */
+  color: #25282f; /* Tetap menggunakan warna teks yang kontras */
+  box-shadow: none; /* Hilangkan efek fokus */
+  outline: none; /* Hilangkan outline saat fokus */
+}
+
+@media (max-width: 768px) {
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .harga-fasi {
+    font-size: 0.9rem;
+  }
+
+  .jum-unit {
+    color: #808080; /* Atur warna jika diperlukan */
+    font-size: 0.75rem; /* Sesuaikan ukuran teks */
+    bottom: 17.6rem;
+    position: absolute;
+  }
+}

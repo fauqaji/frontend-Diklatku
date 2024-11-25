@@ -1,0 +1,28 @@
+.small-title {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.section {
+  background: linear-gradient(
+    180deg,
+    #ffffff83,
+    #ffffff
+  ); /* Gradasi dari warna kuning ke warna kuning lebih gelap */
+  padding: 130px 0;
+}
+.card-warning {
+  background-color: #92242f; /* Gradasi latar belakang kuning untuk warna warning Bootstrap */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+}
+
+.card-warning .card-title {
+  color: #ffffff; /* Warna teks untuk kontras yang baik */
+  margin: 0; /* Menghapus margin default pada CardTitle */
+  padding: 0px; /* Menambahkan padding vertikal kecil */
+}
+
+.card-warning img {
+  border-radius: 12px;
+}

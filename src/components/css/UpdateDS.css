@@ -1,0 +1,119 @@
+.modal-detail-r {
+  max-width: 730px;
+  width: 100%; /* Pastikan elemen dialog mengambil lebar penuh */
+}
+
+.modal-body-ds {
+  min-height: 70vh;
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+}
+
+.jud-up-detDR {
+  color: #bf252b;
+}
+
+.jud-up-det,
+.jud-up-detDR {
+  font-weight: bold;
+  font-size: 1.35rem;
+  word-spacing: 1px;
+  letter-spacing: 2px;
+}
+
+.modal-title-hr {
+  border: 0;
+  border-top: 2px solid #000000; /* Warna garis */
+  width: 93%; /* Atur lebar sesuai kebutuhan */
+  margin: 8px auto; /* Centerkan dan beri jarak di atas */
+}
+
+.modal-body-ds form {
+  width: 100%;
+}
+
+.form-row-ds {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.half-width-ds {
+  flex: 1;
+}
+
+.full-width-ds {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.form-group-ds label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+textarea.form-control-ds {
+  width: 100%;
+  min-height: 100px;
+}
+
+.custom-file-input-ds {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 2px dashed #bf252b;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  color: #bf252b;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.image-up-ds{
+    margin-bottom: 25px;
+}
+
+.custom-file-input-ds .file-input-ds {
+  display: none;
+}
+
+.photo-preview-ds {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-image-ds {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.photo-wrapper-ds {
+  position: relative;
+  display: inline-block;
+}
+
+.remove-photo-button {
+  position: absolute;
+  top: -14px;
+  right: 2px;
+  background-color: transparent;
+  color: #bf252b;
+  border: none;
+  cursor: pointer;
+  font-size: 2em;
+}
+
+.button-upd {
+  display: block; /* Ubah dari flex ke block */
+  margin: 0 auto; /* Ini akan menempatkan tombol di tengah */
+}

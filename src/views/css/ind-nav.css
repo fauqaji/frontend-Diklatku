@@ -1,0 +1,27 @@
+.bg-custom {
+  background-color: #bf252b !important;
+}
+
+.bg-custom:hover {
+  background-color: #c2353a;
+  color: white;
+}
+
+.bg-custom:active {
+  background-color: #a5292e; /* Warna yang sedikit lebih gelap untuk klik */
+  color: white;
+}
+
+.nav-collap-ind {
+  background-color: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .nav-collap-ind {
+    background-color: #333333 !important;
+  }
+}
+
+.side-coll-ind{
+  margin-top: 0 !important;
+}

@@ -1,0 +1,160 @@
+.imgsec-container {
+  height: 90vh; /* Set height to 100vh */
+  display: flex; /* Use flexbox to center content */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center vertically */
+}
+
+.section-images {
+  text-align: center;
+  position: relative;
+  flex-grow: 1; /* Allow section-images to grow and fill the container */
+  display: flex; /* Ensure it behaves as a flex container */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center content vertically */
+}
+
+/* Existing styles... */
+
+.judul-imgsec {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.58rem;
+  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Animasi fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 1;
+  animation: fadeIn 1s ease-out forwards; /* Kurangi durasi animasi */
+}
+
+.judul-imgsec,
+.desk-imgsec {
+  opacity: 0; /* Mulai dari opacity 0 */
+}
+
+.judul-imgsec span {
+  display: block;
+}
+
+.desk-imgsec {
+  margin: 25px 170px 55px;
+  color: #ffffff;
+}
+
+.image-section-wrapper {
+  background-color: #bf252b;
+}
+
+.deskimg-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-wrap: nowrap;
+}
+
+.carousel-img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.active-carousel-img {
+  z-index: 2; /* Higher z-index for the active image wrapper */
+}
+
+.carousel-img {
+  width: 290px;
+  height: 200px;
+  object-fit: cover;
+  opacity: 0.4;
+  z-index: 0;
+  border-radius: 6px;
+  transition: opacity 0.5s ease, transform 0.3s ease; /* Gabungkan transform dan opacity */
+}
+
+.active-carousel-img .carousel-img {
+  width: 320px;
+  height: 210px;
+  opacity: 1;
+  transform: scale(1.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.fade-out {
+  opacity: 0; /* Set to 0 for fade-out effect */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.carousel-control-prev {
+  left: -40px;
+}
+
+.carousel-control-next {
+  right: -40px;
+}
+
+.carousel-control-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+/* Mobile optimization: Jangan terlalu banyak memodifikasi gambar */
+@media (max-width: 768px) {
+  .deskimg-cont {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+
+  .carousel-img-wrapper {
+    flex: 0 0 auto;
+  }
+
+  .carousel-img {
+    width: 110px;
+    height: 50px;
+  }
+
+  .active-carousel-img .carousel-img {
+    width: 170px;
+    height: 100px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    font-size: 1.5rem;
+    top: 90%;
+    transform: translateY(-400%);
+  }
+}

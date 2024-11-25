@@ -36,3 +36,48 @@
     transform: rotate(360deg);
   }
 }
+
+/* CSS untuk memastikan gambar mengisi container */
+.carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Tambahkan overflow hidden untuk mencegah white gap */
+.carousel-item {
+  position: relative;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0; /* Mulai dengan opacity 0 untuk mencegah white gap */
+}
+
+.carousel-item.active {
+  opacity: 1; /* Hanya item aktif yang terlihat */
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 7px; /* Sudut gambar melengkung jika diinginkan */
+}
+
+/* Override default carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+  font-size: 1rem; /* Ukuran icon navigasi */
+  color: white; /* Warna icon navigasi */
+}
+
+
+/*Footer*/
+/* Tambahkan ke file CSS Anda */
+.footer-cen {
+  background-color: #171717;
+  padding: 11px 0;
+  color: white;
+  height: 55px; /* Set tinggi background footer */
+  display: flex; /* Gunakan flexbox untuk penataan */
+  align-items: center; /* Pusatkan konten secara vertikal */
+  justify-content: center; /* Pusatkan konten secara horizontal */
+}

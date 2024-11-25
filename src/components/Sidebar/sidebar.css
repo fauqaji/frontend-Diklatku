@@ -1,0 +1,40 @@
+:root {
+  /* Colors */
+  --black: #333333;
+  --grey: #333333;
+  --black: #333333;
+  --white: #ffffff;
+  --background: #ffffff;
+  --red: #ffd230;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.tooltip {
+  z-index: 1050 !important; /* Pastikan z-index tooltip lebih tinggi */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.tooltip.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip-inner {
+  transition: opacity 0.3s ease-in-out; /* Transisi untuk opacity */
+}
+
+.tooltip.show .tooltip-inner {
+  opacity: 1; /* Opacity penuh saat tooltip ditampilkan */
+}
+
+.tooltip {
+  position: absolute; /* Pastikan tooltip diposisikan dengan benar */
+}

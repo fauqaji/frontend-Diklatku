@@ -1,0 +1,56 @@
+@media (max-width: 768px) {
+  .content {
+    display: flex;
+    justify-content: center;  /* Centers horizontally */
+    align-items: center;      /* Centers vertically */
+    min-height: 70vh;        /* Ensures the content fills the full viewport height */
+  }
+  
+  .card-login {
+    margin: 0 auto;           /* Centers the card horizontally */
+    width: 100%;              /* Adjusts width to fit mobile screen */
+    max-width: 90%;           /* Limits max width for better presentation */
+  }
+
+  .btn-round {
+    width: 100%;              /* Makes the button full width */
+  }
+
+  .logo-container img {
+    width: 150px;             /* Adjusts logo size for mobile */
+  }
+}
+
+.transparent-input .form-control {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  color: #fff; /* Set the text color if needed */
+}
+
+.transparent-input .form-control:focus {
+  background-color: transparent;
+  border-color: #fff; /* Or any other color for focus border */
+  box-shadow: none;
+}
+input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+.input-group-text-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group .input-group-text {
+  border: none; /* Removes border if necessary */
+}
+
+.card-login.card-plain {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
