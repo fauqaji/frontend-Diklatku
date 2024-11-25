@@ -223,7 +223,7 @@ const PemesananRuang = () => {
                   </button>
                 </div>
                 <div className="modal-body">
-                  Apakah Anda yakin ingin menghapus booking ini?
+                  Apakah Anda yakin ingin menghapus pemesanan ini?
                 </div>
                 <div className="modal-footer d-flex justify-content-center">
                   <button
