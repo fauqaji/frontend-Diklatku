@@ -13,7 +13,7 @@
 //   InputGroupText,
 //   InputGroup,
 //   Container,
-//   Row
+//   Row,
 // } from "reactstrap";
 
 // // core components
@@ -27,10 +27,11 @@
 //       <div
 //         className="section section-signup"
 //         style={{
-//           backgroundImage: "url(" + require("../../assets/img/bg11.jpg") + ")",
+//           backgroundImage:
+//             "url(" + require("../../assets/img/bg-balaikota.jpg") + ")",
 //           backgroundSize: "cover",
 //           backgroundPosition: "top center",
-//           minHeight: "700px"
+//           minHeight: "700px",
 //         }}
 //       >
 //         <Container>
@@ -41,33 +42,6 @@
 //                   <CardTitle className="title-up" tag="h3">
 //                     Sign Up
 //                   </CardTitle>
-//                   <div className="social-line">
-//                     <Button
-//                       className="btn-neutral btn-icon btn-round"
-//                       color="facebook"
-//                       href="#pablo"
-//                       onClick={(e) => e.preventDefault()}
-//                     >
-//                       <i className="fab fa-facebook-square"></i>
-//                     </Button>
-//                     <Button
-//                       className="btn-neutral btn-icon btn-round"
-//                       color="twitter"
-//                       href="#pablo"
-//                       onClick={(e) => e.preventDefault()}
-//                       size="lg"
-//                     >
-//                       <i className="fab fa-twitter"></i>
-//                     </Button>
-//                     <Button
-//                       className="btn-neutral btn-icon btn-round"
-//                       color="google"
-//                       href="#pablo"
-//                       onClick={(e) => e.preventDefault()}
-//                     >
-//                       <i className="fab fa-google-plus"></i>
-//                     </Button>
-//                   </div>
 //                 </CardHeader>
 //                 <CardBody>
 //                   <InputGroup
@@ -145,7 +119,7 @@
 //               size="lg"
 //               tag={Link}
 //             >
-//               View Login Page
+//               Login Page
 //             </Button>
 //           </div>
 //         </Container>

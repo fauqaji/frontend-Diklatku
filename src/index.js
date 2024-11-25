@@ -14,7 +14,6 @@ import GedungA from "./views/Buildings/Gedung_A.js";
 import GedungB from "./views/Buildings/Gedung_B.js";
 import AreaC from "./views/Buildings/AreaC.js";
 import PemesananRuang from "./views/PemesananRuang/PemesananRuang.js";
-// import DetailService from "./views/DetailService/DetailService.js";
 import DetailServiceUpdate from "./components/UpdateDS/DetailServiceUpdate.js";
 import { AuthProvider } from "./components/context/AuthContext"; // Path sesuai dengan lokasi AuthContext
 
