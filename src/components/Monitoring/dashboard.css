@@ -77,7 +77,7 @@ h1 {
 
 .room-list {
   display: flex;
-  width: 190px;
+  width: 250px;
   flex-wrap: wrap;
   margin-top: 10px;
   padding-left: 14px;
