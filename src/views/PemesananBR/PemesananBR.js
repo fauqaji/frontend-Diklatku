@@ -132,7 +132,9 @@ const PemesananBR = () => {
 
   const handleDetail = (id) => {
     setBookingRoomId(id);
-    navigate(`/pemesananBR/pemesanan-ruang`, { state: { bookingRoomDetail: id } });
+    navigate(`/pemesananBR/pemesanan-ruang`, {
+      state: { bookingRoomDetail: id },
+    });
   };
 
   const handleDelete = async (id) => {
@@ -194,7 +196,9 @@ const PemesananBR = () => {
           {error && <p className="text-danger">{error}</p>}
 
           <div className="row">
-            <h1 className="mb-4 text-start">PEMESANAN AKTIF</h1>
+            <div>
+              <h1 className="mb-4 mt-4 text-start ">PEMESANAN AKTIF</h1>
+            </div>
             <div>
               <nav className="d-flex justify-content-between my-2 nav-pem">
                 <div className="button-group">

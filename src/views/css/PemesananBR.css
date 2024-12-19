@@ -47,6 +47,7 @@ p {
   max-width: 95%;
 }
 
+
 .nav-pem {
   display: flex;
   justify-content: space-between;
@@ -67,6 +68,7 @@ p {
 
 .nav-pem .button-group {
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .nav-pem .btn-ged {

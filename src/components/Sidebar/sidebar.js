@@ -81,7 +81,10 @@ const Sidebar = () => {
 
         {isLoggedIn && (
           <Item
-            isActive={location.pathname === "/pemesananBR"}
+            isActive={
+              location.pathname === "/pemesananBR" ||
+              location.pathname === "/pemesananBR/pemesanan-ruang"
+            }
             onClick={() => navigate("/pemesananBR")}
           >
             <Img src={book} alt="Book" />
