@@ -41,7 +41,7 @@ const Sidebar = () => {
   // Fungsi handleLogout untuk logout
   const handleLogout = () => {
     // Hapus token atau data session
-    localStorage.removeItem("token"); // Contoh: hapus token dari localStorage
+    localStorage.clear();
     setIsLoggedIn(false);
     // Arahkan pengguna ke halaman login
     navigate("/");
@@ -76,15 +76,13 @@ const Sidebar = () => {
           onClick={() => navigate("/dashboard")}
         >
           <Img src={allbuilding} alt="all" />
-          <Text clicked={click ? "true" : false}>
-            Gedung & Status Ruang
-          </Text>
+          <Text clicked={click ? "true" : false}>Gedung & Status Ruang</Text>
         </Item>
 
         {isLoggedIn && (
           <Item
-            isActive={location.pathname === "/pemesanan-ruang"}
-            onClick={() => navigate("/pemesanan-ruang")}
+            isActive={location.pathname === "/pemesananBR"}
+            onClick={() => navigate("/pemesananBR")}
           >
             <Img src={book} alt="Book" />
             <Text clicked={click ? "true" : false}>Pemesanan Ruang</Text>
@@ -127,9 +125,7 @@ const Sidebar = () => {
             onMouseLeave={() => setTooltipActive(false)}
           >
             <i className="fa-solid fa-right-from-bracket"></i>
-            <Tooltip active={tooltipActive ? "true" : false}>
-              Keluar
-            </Tooltip>
+            <Tooltip active={tooltipActive ? "true" : false}>Keluar</Tooltip>
           </Logout>
         )}
       </SlickBar>

@@ -14,9 +14,11 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 5;
-  const [searchTerm, setSearchTerm] = useState(""); // State untuk search
   const navigate = useNavigate();
+
 
   useEffect(() => {
     // Fetch buildings data
@@ -47,23 +49,28 @@ const Dashboard = () => {
     };
 
     const fetchHistory = async () => {
+      
       try {
-        const response = await axios.get("http://localhost:3000/api/history");
-        const sortedHistory = response.data.data.sort(
-          (a, b) => new Date(b.changed_at) - new Date(a.changed_at)
-        );
-        setHistory(sortedHistory);
-        // Set current page to 1 only when fetching new history
-        setCurrentPage(1);
+        setHistory([]);
+        const response = await axios.get("http://localhost:3000/api/history", {
+          params: {
+            page: currentPage,
+            limit: itemsPerPage, // Kirim jumlah item per halaman
+            searchTerm, // Anda bisa tetap menggunakan searchTerm untuk pencarian jika diperlukan
+          },
+        });
+
+        setHistory(response.data.data); // Set data dari server
+        setTotalPages(response.data.totalPages); // Set total halaman dari server
       } catch (err) {
         setError(err.message);
-      }
+      } 
     };
 
     fetchBuildings();
     fetchRoomsC();
     fetchHistory();
-  }, []);
+  }, [currentPage, searchTerm]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -159,44 +166,39 @@ const Dashboard = () => {
     }
   };
 
-  // Total pages calculation
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // Filter data berdasarkan room_number
-  const filteredHistory = history.filter((item) =>
-    item.Room.room_number.toLowerCase().includes(searchTerm.toLowerCase())
-  );
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+    } else if (pageNumber > totalPages) {
+      setCurrentPage(totalPages); // Set ke halaman terakhir
+    } else {
+      setCurrentPage(1); // Set ke halaman pertama jika pageNumber kurang dari 1
     }
   };
-
-  const totalPages = Math.ceil(filteredHistory.length / itemsPerPage);
+  // Total pages calculation
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const renderPagination = () => {
     const pageNumbers = [];
-    const maxVisiblePages = 4; // Atur jumlah halaman yang ingin terlihat
+    const maxVisiblePages = 4;
 
     for (let i = 1; i <= totalPages; i++) {
       if (
-        i <= maxVisiblePages || // Tampilkan halaman pertama sampai maxVisiblePages
-        i > totalPages - maxVisiblePages || // Tampilkan halaman terakhir sampai maxVisiblePages dari akhir
-        (currentPage >= maxVisiblePages &&
-          currentPage <= totalPages - maxVisiblePages &&
-          (i === 1 ||
-            i === totalPages ||
-            (i >= currentPage - 1 && i <= currentPage + 1))) // Tampilkan halaman di sekitar currentPage
+        totalPages <= maxVisiblePages ||
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
       ) {
         pageNumbers.push(i);
       } else if (pageNumbers[pageNumbers.length - 1] !== "...") {
-        pageNumbers.push("..."); // Tambahkan titik untuk menyembunyikan halaman yang tidak ditampilkan
+        pageNumbers.push("...");
       }
     }
 
-    return pageNumbers.map((number) => (
+    return pageNumbers.map((number, index) => (
       <li
-        key={number}
+        key={index}
         className={`page-item ${currentPage === number ? "active" : ""}`}
       >
         {number === "..." ? (
@@ -213,10 +215,8 @@ const Dashboard = () => {
   // Fungsi untuk menangani perubahan input search
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
-
-  // Ambil item yang telah difilter dan dipaginasi
-  const currentItems = filteredHistory.slice(indexOfFirstItem, indexOfLastItem);
 
   const formatDate = (date) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -224,86 +224,96 @@ const Dashboard = () => {
   };
 
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
-
+  
   return (
     <div id="AllBuilding" className="dashboard-container dash-con">
       <Sidebar />
       <div className="content-container">
-        <div className="container">
+        <div className="container cont-dash-spe">
           <h1 className="mb-2 my-1 text-start">MONITORING GEDUNG</h1>
           <div className="row">
-            {buildings.map((building) => (
-              <div className="col-md-4 mb-1" key={building.building_id}>
-                <div
-                  className={`card card-dash ${getBuildingCardClass(
-                    building.building_name
-                  )}`}
-                >
-                  <img
-                    src={getBuildingImage(building.building_name)}
-                    className="card-img-top"
-                    alt={building.building_name}
-                  />
-                  <div className="card-body d-flex flex-column">
-                    <div className="status-container flex-grow-1">
-                      <h5 className="card-title mb-3 font-weight-bold">
-                        {getBuildingName(building.building_name)}
-                      </h5>
-                      {building.building_name === "Gedung C" ? (
-                        <div className="d-flex room-list">
-                          {roomsC
-                            .sort((a, b) =>
-                              a.room_number.localeCompare(b.room_number)
-                            )
-                            .map((room, index) => (
-                              <span key={room.room_id} className="room-item">
-                                {room.room_number}
-                                {index < roomsC.length - 1 ? ", " : ""}
-                              </span>
-                            ))}
-                        </div>
-                      ) : (
-                        Object.keys(building.room_status).map((status) => (
-                          <div
-                            className="d-flex align-items-center mb-1 ml-3"
-                            key={status}
-                          >
-                            <span className={`${getStatusColor(status)} me-2`}>
-                              {getStatusIcon(status)}
-                            </span>
-                            <span className="me-2">
-                              {building.room_status[status].count}
-                            </span>
-                            <span>{getStatusLabel(status)}</span>
+            {buildings?.length > 0 ? (
+              buildings.map((building) => (
+                <div className="col-md-4 mb-1" key={building.building_id}>
+                  <div
+                    className={`card card-dash ${getBuildingCardClass(
+                      building.building_name
+                    )}`}
+                  >
+                    <img
+                      src={getBuildingImage(building.building_name)}
+                      className="card-img-top"
+                      alt={building.building_name}
+                    />
+                    <div className="card-body d-flex flex-column">
+                      <div className="status-container flex-grow-1">
+                        <h5 className="card-title mb-3 font-weight-bold">
+                          {getBuildingName(building.building_name)}
+                        </h5>
+                        {building.building_name === "Gedung C" ? (
+                          <div className="d-flex room-list">
+                            {roomsC
+                              .sort((a, b) =>
+                                a.room_number.localeCompare(b.room_number)
+                              )
+                              .map((room, index) => (
+                                <span
+                                  key={`${room.room_id}-${index}`}
+                                  className="room-item"
+                                >
+                                  {room.room_number}
+                                  {index < roomsC.length - 1 ? ", " : ""}
+                                </span>
+                              ))}
                           </div>
-                        ))
-                      )}
+                        ) : (
+                          Object.keys(building.room_status).map((status) => (
+                            <div
+                              className="d-flex align-items-center mb-1 ml-3"
+                              key={status}
+                            >
+                              <span
+                                className={`${getStatusColor(status)} me-2`}
+                              >
+                                {getStatusIcon(status)}
+                              </span>
+                              <span className="me-2">
+                                {building.room_status[status]?.count}
+                              </span>
+                              <span>{getStatusLabel(status)}</span>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                    <div className="card-foo">
+                      <i
+                        className="fa-solid fa-arrow-right icon-size"
+                        onClick={() => handleNavigate(building.building_name)}
+                        style={{ cursor: "pointer" }}
+                      ></i>
                     </div>
                   </div>
-                  <div className="card-foo">
-                    <i
-                      className="fa-solid fa-arrow-right icon-size"
-                      onClick={() => handleNavigate(building.building_name)}
-                      style={{ cursor: "pointer" }}
-                    ></i>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-center">Tidak ada data gedung.</p>
+            )}
           </div>
-          <h1 className="mb-2 text-start">RIWAYAT PEMESANAN</h1>
 
-          {/* Search bar */}
+          <h1 className="mb-2 text-start">RIWAYAT PEMESANAN</h1>
           <div className="mb-2">
             <input
               type="text"
               className="form-control"
-              placeholder="Cari nama ruangan"
+              placeholder="Cari nama gedung atau nama ruangan"
               value={searchTerm}
               onChange={handleSearchChange}
             />
           </div>
-          {error && <p>{error}</p>}
+
+          {error && <p className="text-danger">{error}</p>}
+
           <table className="table table-bord">
             <thead>
               <tr>
@@ -316,20 +326,27 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((item, index) => (
+            {history.length > 0 ? (
+              history.map((item, index) => (
                 <tr key={item.booking_room_id || index}>
-                  {" "}
-                  {/* Ganti null dengan index sebagai fallback */}
                   <td>{indexOfFirstItem + index + 1}</td>
-                  <td>{item.Room.Building.name}</td>
-                  <td>{item.Room.room_number}</td>
+                  <td>{item.Room?.Building?.name || "Tidak Tersedia"}</td>
+                  <td>{item.Room?.room_number || "Tidak Tersedia"}</td>
                   <td>{formatDate(item.start_date)}</td>
                   <td>{formatDate(item.end_date)}</td>
                   <td>{item.days} hari</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center">
+                  Tidak ada pemesanan
+                </td>
+              </tr>
+            )}
             </tbody>
           </table>
+
           <nav>
             <ul className="pagination justify-content-center">
               {renderPagination()}

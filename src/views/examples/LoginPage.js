@@ -67,9 +67,14 @@ function LoginPage() {
         toast.error(response.data.message || "Login gagal.");
       }
     } catch (error) {
-      let errorMessage = "Login gagal: Terjadi kesalahan yang tidak diketahui.";
+      let errorMessage = "Login gagal";
       if (error.response) {
-        errorMessage = error.response.data.message || "Kesalahan server";
+        if (error.response.status === 429) {
+          // Jika status 429, tampilkan pesan warning
+          toast.warning("Terlalu banyak percobaan login. Coba lagi nanti.");
+        } else {
+          errorMessage = error.response.data.message || "Kesalahan server";
+        }
       } else if (error.request) {
         errorMessage = "Tidak ada respons dari server";
       } else {

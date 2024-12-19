@@ -14,8 +14,10 @@ import GedungA from "./views/Buildings/Gedung_A.js";
 import GedungB from "./views/Buildings/Gedung_B.js";
 import AreaC from "./views/Buildings/AreaC.js";
 import PemesananRuang from "./views/PemesananRuang/PemesananRuang.js";
+import PemesananBR from "./views/PemesananBR/PemesananBR.js";
 import DetailServiceUpdate from "./components/UpdateDS/DetailServiceUpdate.js";
 import { AuthProvider } from "./components/context/AuthContext"; // Path sesuai dengan lokasi AuthContext
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute.js"; // Path sesuai lokasi PrivateRoute.js
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -29,8 +31,30 @@ root.render(
         <Route path="/gedungA" element={<GedungA />} />
         <Route path="/gedungB" element={<GedungB />} />
         <Route path="/areaC" element={<AreaC />} />
-        <Route path="/pemesanan-ruang" element={<PemesananRuang />} />
-        <Route path="/detail-update/:id" element={<DetailServiceUpdate />} />
+        <Route
+          path="/pemesananBR/pemesanan-ruang"
+          element={
+            <PrivateRoute>
+              <PemesananRuang />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/pemesananBR"
+          element={
+            <PrivateRoute>
+              <PemesananBR />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/detail-update/:id"
+          element={
+            <PrivateRoute>
+              <DetailServiceUpdate />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

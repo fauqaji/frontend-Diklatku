@@ -1,0 +1,297 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: 10;
+  user-select: none;
+  pointer-events: none;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 100;
+  margin-top: 10px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pemesanan-ruang-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #f8f8f8;
+  max-height: 100vh;
+}
+
+.pemesanan-ruang-content-container {
+  flex: 1;
+  padding: 10px;
+  margin-bottom: 64px;
+}
+
+.pr-ak {
+  user-select: none;
+  pointer-events: none;
+}
+
+.container-pemesanan {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 20px 45px;
+  border-radius: 13px;
+  max-width: 95%;
+}
+
+.nav-pem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  height: auto; /* Atur tinggi sesuai kebutuhan */
+  box-sizing: border-box;
+  font-size: 1.11rem;
+}
+
+.nav-pem .button-group,
+.nav-pem .button-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-pem .button-group {
+  margin-bottom: 0.5rem;
+}
+
+.nav-pem .btn-ged {
+  width: auto;
+  flex: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px ridge #bf252b;
+  color: #bf252b;
+  margin: 0 1px;
+  transition: transform 0.2s ease-in-out;
+  position: relative;
+  z-index: 1;
+}
+.nav-pem .btn-ged.active,
+.nav-pem .btn-ged:active,
+.nav-pem .btn-ged:focus,
+.nav-pem .btn-ged:hover {
+  background-color: #bf252b !important; /* Tetap menjaga warna background */
+  color: #ffffff;
+  outline: none; /* Mencegah outline fokus */
+  box-shadow: 0 4px 7px rgba(246, 7, 7, 0.6) !important; /* Alternatif untuk fokus */
+  transform: scale(1.03);
+  border: 1px ridge #bf252b !important;
+  transform-origin: center;
+}
+
+.nav-pem .btn-prene {
+  width: auto;
+  flex: none;
+  padding: 6px 13px;
+  border-radius: 100%;
+  background-color: #bf252b;
+  color: #f8f8f8;
+}
+.nav-pem .btn-prene:active,
+.nav-pem .btn-prene:focus,
+.nav-pem .btn-prene:hover {
+  background-color: #bf252b !important; /* Tetap menjaga warna background */
+  color: #ffffff;
+  outline: none; /* Mencegah outline fokus */
+  box-shadow: 0 2px 4px rgba(246, 7, 7, 0.6) !important; /* Alternatif untuk fokus */
+  transform-origin: center;
+  transform: scale(1.03);
+}
+
+.bag-card-pem {
+  margin-top: 5px;
+}
+
+.head-card-pem {
+  margin: 0 10px !important;
+  position: relative;
+}
+
+.head-card-pem h5,
+span {
+  user-select: none;
+  pointer-events: none;
+}
+
+.head-card-pem h5 {
+  font-weight: bolder;
+}
+
+.card-pem {
+  border-radius: 11px;
+  box-shadow: 9px 6px 9px rgba(47, 47, 47, 0.4), 3px 6px 3px rgba(0, 0, 0, 0.3) !important;
+  padding: 13px;
+  margin-bottom: 3px;
+}
+.card-pem p {
+  font-weight: bolder;
+}
+
+.icon-container {
+  position: absolute;
+  top: -11px;
+  right: -4px;
+}
+
+.i-pem-info {
+  font-size: 1.32rem;
+  cursor: pointer;
+  margin-top: 3px;
+}
+
+.card-b-pem {
+  padding: 0 10px !important;
+}
+
+.card-bper-pem {
+  margin-right: 113px;
+  margin-bottom: 0 !important;
+}
+.card-bket-pem {
+  margin-right: 27px;
+}
+
+.btn-bwh-pem {
+  margin: 0 11px !important;
+}
+
+.btn-res-pem {
+  padding: 15px 10px;
+  border-radius: 11px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #f7c648;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-res-pem:hover {
+  background-color: #f0b224;
+  transform: scale(1.01);
+  transform-origin: center;
+}
+
+.btn-res-pem:active {
+  background-color: #e7b41e !important;
+  transform: scale(0.98);
+  transform-origin: center;
+}
+
+.btn-res-pem:focus {
+  background-color: #e7b41e !important;
+  outline: none;
+  transform-origin: center;
+}
+
+.btn-hap-pem {
+  padding: 15px 34px;
+  border-radius: 11px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #bf252b;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-hap-pem:hover {
+  background-color: #9f1d22;
+  transform: scale(1.01);
+  transform-origin: center;
+}
+
+.btn-hap-pem:active {
+  background-color: #8e1a1f !important;
+  transform: scale(0.98);
+  transform-origin: center;
+}
+
+.btn-hap-pem:focus {
+  background-color: #8e1a1f !important;
+  outline: none;
+  transform-origin: center;
+}
+
+.btn-res-pem,
+.btn-hap-pem {
+  display: flex;
+  align-items: center; /* Menyelaraskan gambar dan teks secara vertikal */
+}
+
+.btn-res-pem img,
+.btn-hap-pem img {
+  margin-right: 8px; /* Menambahkan jarak antara gambar dan teks */
+  width: 18px; /* Sesuaikan ukuran gambar sesuai kebutuhan */
+  height: auto; /* Memastikan proporsi gambar tetap terjaga */
+}
+
+.btn-del-pbr {
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #bf252b;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.btn-del-pbr:hover {
+  background-color: #bf252b;
+  transform: scale(1.01);
+}
+
+.btn-del-pbr:active {
+  background-color: #8e1a1f !important;
+  transform: scale(0.98);
+}
+
+.btn-del-pbr:focus {
+  background-color: #8e1a1f !important;
+  outline: none;
+}
+
+.btn-bat-pbr {
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333333;
+  background-color: #ffffff;
+  border: 1px solid #bf252b;
+  transition: background-color 0.1s, transform 0.1s;
+}
+
+.btn-bat-pbr:hover {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #bf252b;
+  transform: scale(1.01);
+}
+
+.btn-bat-pbr:active {
+  background-color: #ffffff !important;
+  color: #333333;
+  border: 1px solid #bf252b;
+  transform: scale(0.98);
+}
+
+.btn-bat-pbr:focus {
+  background-color: #ffffff !important;
+  color: #333333;
+  border: 1px solid #bf252b;
+  outline: none;
+}

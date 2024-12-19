@@ -1,0 +1,23 @@
+.btn-sim-br {
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: .9rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #BF252B;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  .btn-sim-br:hover {
+    background-color: #bf252b;
+    transform: scale(1.01);
+  }
+  
+  .btn-sim-br:active {
+    background-color: #8e1a1f !important;
+    transform: scale(0.98);
+  }
+  
+  .btn-sim-br:focus {
+    background-color: #8e1a1f !important;
+    outline: none;
+  }

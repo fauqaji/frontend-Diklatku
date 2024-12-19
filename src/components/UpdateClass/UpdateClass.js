@@ -5,59 +5,81 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../css/UpdateClass.css";
 
-const UpdateClass = ({ room, onClose }) => {
-  const [statusId, setStatusId] = useState(room ? room.status_id : 1);
+const UpdateClass = ({ selectedRooms, rooms, onClose }) => {
+  const [statusId, setStatusId] = useState(1);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [bookingRoomId] = useState(null);
   const [bookedDates, setBookedDates] = useState([]);
 
   const statusOptions = [
     { id: 1, label: "Tersedia" },
     { id: 2, label: "Tidak Tersedia" },
-    { id: 3, label: "Terpakai" },
+    { id: 3, label: "Pesan" },
   ];
 
   // Fetch tanggal yang sudah dibooking saat room_id tersedia
   useEffect(() => {
     const fetchBookingRoom = async () => {
-      if (room?.room_id) {
-        try {
-          const token = localStorage.getItem("token");
-          const headers = { Authorization: `Bearer ${token}` };
+      try {
+        const token = localStorage.getItem("token");
+        const headers = { Authorization: `Bearer ${token}` };
 
-          // Fetch tanggal booking berdasarkan room_id
+        // Ambil room_id dari selectedRooms
+        const roomIds = selectedRooms.map((room) => room);
+        // console.log("Selected Room IDs:", roomIds);
+
+        const allBookedDates = []; // Untuk menampung semua tanggal yang dibooking
+
+        // Loop untuk setiap room_id yang dipilih dan ambil tanggal bookingnya
+        for (const roomId of roomIds) {
           const response = await axios.get(
-            `http://localhost:3000/api/booking-rooms/cektanggal/${room.room_id}`,
+            `http://localhost:3000/api/booking-rooms/cektanggal/${roomId}`,
             { headers }
           );
-          const bookedDatesData = response.data.data.map(
-            ({ start_date, end_date }) => ({
-              start: new Date(start_date),
-              end: new Date(end_date),
-            })
-          );
-          setBookedDates(bookedDatesData); // Simpan tanggal yang sudah dibooking
-        } catch (error) {
-          console.error("Gagal mengambil tanggal booking.", error);
+          // console.log(`Response for Room ID ${roomId}:`, response.data.data);
+
+          if (response.data.data.length > 0) {
+            const bookedDatesData = response.data.data.map(
+              ({ start_date, end_date }) => ({
+                start: new Date(start_date),
+                end: new Date(end_date),
+              })
+            );
+            allBookedDates.push(...bookedDatesData); // Gabungkan semua tanggal yang dibooking
+          }
         }
+
+        // Filter untuk tanggal yang unik
+        const seenDates = new Set();
+        const uniqueBookedDates = allBookedDates.filter(({ start, end }) => {
+          const key = `${start.getTime()}-${end.getTime()}`;
+          if (seenDates.has(key)) {
+            return false;
+          }
+          seenDates.add(key);
+          return true;
+        });
+
+        // console.log("Unique Booked Dates:", uniqueBookedDates);
+        setBookedDates(uniqueBookedDates); // Simpan tanggal yang unik
+      } catch (error) {
+        console.error("Gagal mengambil tanggal booking.", error);
       }
     };
 
     fetchBookingRoom();
-  }, [room]);
+  }, [selectedRooms]); // Memanggil efek setiap kali selectedRooms berubah
 
   // Fungsi untuk menampilkan hanya tanggal yang tidak memiliki start_date dan end_date
   const filterDates = (date) => {
-    // Ambil tanggal dari date
     const targetDate = new Date(
       date.getFullYear(),
       date.getMonth(),
       date.getDate()
     );
 
-    // Periksa apakah tanggal tersebut ada dalam daftar bookedDates
     return bookedDates.every(({ start, end }) => {
       const startDate = new Date(
         start.getFullYear(),
@@ -78,14 +100,29 @@ const UpdateClass = ({ room, onClose }) => {
   };
 
   const handleStatusChange = (id) => {
-    if (
-      (room.status_name === "available" && id === 1) ||
-      (room.status_name === "not_available" && id === 2)
-    ) {
-      toast.warning("Status Ruangan Saat Ini.");
+    if (rooms.length === 0) {
+      toast.warning("Data ruangan belum dimuat. Silakan coba lagi.");
       return;
     }
 
+    // Mencari ruangan berdasarkan ID yang ada dalam selectedRooms
+    const room = rooms.find((room) => room.room_id === selectedRooms[0]);
+
+    if (room) {
+      const statusName = room.status_name; // Mengambil status_name dari data ruangan
+
+      if (
+        (statusName === "available" && id === 1) ||
+        (statusName === "not_available" && id === 2)
+      ) {
+        toast.warning("Status Ruangan Saat Ini.");
+        return;
+      }
+    } else {
+      console.log("Room tidak ditemukan untuk room_id:", selectedRooms[0]);
+    }
+
+    // Jika status berubah, update status dan reset tanggal jika perlu
     if (id !== statusId) {
       setStatusId(id);
       if (id !== 3) {
@@ -96,14 +133,49 @@ const UpdateClass = ({ room, onClose }) => {
   };
 
   const handleSave = async () => {
-    if (!room || !room.room_id) {
-      toast.error("Ruangan tidak valid. Silakan coba lagi.");
+    if (!selectedRooms || selectedRooms.length === 0) {
+      toast.error("Tidak ada kamar yang dipilih.");
       return;
     }
 
-    if (statusId === 3 && (!startDate || !endDate)) {
-      toast.error("Tanggal tidak boleh kosong saat ruangan terpakai.");
-      return;
+    // Mencari ruangan berdasarkan ID yang ada dalam selectedRooms
+    const room = rooms.find((room) => room.room_id === selectedRooms[0]);
+
+    if (room) {
+      const statusName = room.status_name; // Mengambil status_name dari data ruangan
+
+      // Memeriksa kondisi status ruangan berdasarkan statusName dan statusId
+      const isStatusRestricted =
+        (statusName === "available" && statusId === 1) ||
+        (statusName === "not_available" && statusId === 2);
+
+      if (isStatusRestricted) {
+        toast.warning("Status Ruangan Saat Ini.");
+        return;
+      }
+    } else {
+      toast.error("Room tidak ditemukan untuk room_id:", selectedRooms[0]);
+    }
+
+    if (statusId === 3) {
+      if (!startDate || !endDate) {
+        toast.error("Tanggal tidak boleh kosong saat ruangan terpakai.");
+        return;
+      }
+
+      // Periksa apakah rentang tanggal bertabrakan dengan tanggal yang sudah dibooking
+      const hasConflict = bookedDates.some(({ start, end }) => {
+        return (
+          (startDate >= start && startDate <= end) ||
+          (endDate >= start && endDate <= end) ||
+          (startDate <= start && endDate >= end)
+        );
+      });
+
+      if (hasConflict) {
+        toast.warning("Tanggal tertentu sudah dipesan. Pilih tanggal lain.");
+        return;
+      }
     }
 
     try {
@@ -111,36 +183,34 @@ const UpdateClass = ({ room, onClose }) => {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (statusId === 1 || statusId === 2) {
-        if (bookingRoomId) {
-          await axios.delete(
-            `http://localhost:3000/api/booking-rooms/${bookingRoomId}`,
-            { headers }
-          );
-          console.log(`Booking room with ID ${bookingRoomId} deleted.`);
-        }
+        const roomIds = selectedRooms.map((room) => room);
+        const roomData = { status_id: statusId };
 
         await axios.put(
-          `http://localhost:3000/api/rooms/${room.room_id}`,
-          { status_id: statusId },
+          "http://localhost:3000/api/rooms/multruang",
+          { roomIds, roomData },
           { headers }
         );
-        toast.success("Status ruangan berhasil diperbarui.");
+        toast.success("Status ruangan berhasil diubah");
       } else if (statusId === 3) {
+        const roomIds = selectedRooms.filter((id) => id !== undefined);
         const bookingData = {
-          room_id: room.room_id,
-          start_date: startDate.toISOString(), // Mengirim dengan waktu yang tepat (UTC)
-          end_date: endDate.toISOString(), // Mengirim dengan waktu yang tepat (UTC)
+          rooms: roomIds,
+          start_date: startDate.toISOString(),
+          end_date: endDate.toISOString(),
         };
 
         await axios.post(
-          `http://localhost:3000/api/booking-rooms`,
+          "http://localhost:3000/api/booking-rooms/multruang",
           bookingData,
           { headers }
         );
-        toast.success("Booking baru berhasil dibuat.");
+        toast.success("Pesanan berhasil dibuat");
       }
 
-      onClose();
+      setTimeout(() => {
+        onClose();
+      }, 2000);
     } catch (error) {
       toast.error(
         `Gagal menyimpan data: ${
@@ -152,7 +222,7 @@ const UpdateClass = ({ room, onClose }) => {
 
   return (
     <div>
-      <h2>{room.room_number}</h2>
+      <h2>{selectedRooms.length} Kamar yang dipilih</h2>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Status Kelas</Form.Label>
@@ -165,8 +235,7 @@ const UpdateClass = ({ room, onClose }) => {
                 }`}
                 onClick={() => handleStatusChange(status.id)}
                 style={{
-                  cursor:
-                    status.id === room.status_id ? "not-allowed" : "pointer",
+                  cursor: "pointer",
                   padding: "10px",
                   border: "1px solid #ccc",
                   borderRadius: "5px",
@@ -174,9 +243,13 @@ const UpdateClass = ({ room, onClose }) => {
                   textAlign: "center",
                   margin: "0 5px",
                   backgroundColor:
-                    status.id === statusId ? "#007bff" : "transparent",
+                    status.id === statusId ? "#bf252b" : "transparent",
                   color: status.id === statusId ? "#fff" : "#000",
-                  opacity: status.id === room.status_id ? 0.5 : 1,
+                  transition: "background-color 0.3s ease", // Animasi
+                  "&:hover": {
+                    backgroundColor:
+                      status.id === statusId ? "#0056b3" : "#e9ecef", // Warna saat hover
+                  },
                 }}
               >
                 {status.label}
@@ -209,11 +282,19 @@ const UpdateClass = ({ room, onClose }) => {
         )}
 
         <div className="d-flex justify-content-center mt-3">
-          <Button variant="primary" onClick={handleSave} className="mx-1">
-            Simpan
-          </Button>
-          <Button variant="secondary" onClick={onClose} className="mx-1">
+          <Button
+            variant="secondary"
+            onClick={onClose}
+            className="mx-1 upd-cls-bat"
+          >
             Batal
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            className="mx-1 upd-cls-sim"
+          >
+            Simpan
           </Button>
         </div>
       </Form>

@@ -7,13 +7,20 @@ body {
 h1 {
   font-size: 1rem;
   font-weight: 10;
-  
+  user-select: none;
+  pointer-events: none;
 }
 
-p{
+p {
   font-size: 1rem;
   font-weight: 100;
   margin-top: 20px;
+}
+
+
+h5 {
+  font-size: 20px;
+  font-weight: light;
 }
 
 .gedA-con {
@@ -27,6 +34,12 @@ p{
 .content-container {
   flex: 1;
   padding: 10px;
+  margin-bottom: 64px;
+}
+
+.gd-a{
+  user-select: none;
+  pointer-events: none;
 }
 
 .room-container {
@@ -56,10 +69,113 @@ p{
   font-size: 16px;
   text-align: center;
   font-weight: 100;
+  user-select: none;
+  pointer-events: none;
 }
 
 .room-box p {
   margin: 0;
   font-size: 11px;
   color: #6c757d;
+}
+
+.room-box.selected {
+  box-shadow: 0 4px 10px rgba(191, 37, 43, 0.5); /* Shadow dengan warna gelap */
+  transition: transform 0.2s, box-shadow 0.2s; /* Animasi shadow dan transform */
+  background-color: transparent !important; /* Warna latar elemen */
+  color: #333333 !important;
+  border: groove 1px #bf252b;
+  transform: scale(1.02); /* Efek pembesaran sedikit */
+}
+.room-box.selected .check-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 15px;
+  color: #bf252b;
+}
+/* .floating-button {
+  position: fixed;
+  width: 13%;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #242f48;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 8px 25px;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  outline: none;
+} */
+
+/* .floating-button:hover {
+  background-color: #253150;
+}
+
+.floating-button:focus {
+  outline: none; 
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); 
+} */
+.fixed-bottom {
+  position: fixed;
+  width: auto;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.btn-mult {
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 10px 25px;
+  background-color: #f8f8f8;
+  color: #333333;
+  border: ridge 0.5px #bf252b;
+  font-weight: 700;
+  font-size: medium;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-mult-stat {
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 10px 25px;
+  background-color: #bf252b;
+  color: #ffffff;
+  border: ridge 0.5px #ffffff;
+  font-weight: 700;
+  font-size: medium;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-mult-stat:hover,
+.btn-mult:hover {
+  background-color: #db2e34;
+}
+
+.btn-mult:active,
+.btn-mult:focus {
+  background-color: #bf252b !important; /* Tetap menjaga warna background */
+  color: #ffffff;
+  outline: none; /* Mencegah outline fokus */
+  box-shadow: 0 0 8px rgba(246, 7, 7, 0.2); /* Alternatif untuk fokus */
+}
+
+.btn-mult-stat:active,
+.btn-mult-stat:focus {
+  background-color: #bf252b !important; /* Tetap menjaga warna background */
+  color: #ffffff;
+  outline: none; /* Mencegah outline fokus */
+  box-shadow: 0 0 8px rgba(246, 7, 7, 0.2); /* Alternatif untuk fokus */
+}
+
+.meB-2 {
+  margin-right: 8px; /* Mengatur jarak antar tombol */
 }

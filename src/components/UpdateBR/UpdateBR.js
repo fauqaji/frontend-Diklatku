@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify"; // Importing Toast components
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import "../css/UpdateBR.css";
 
 const UpdateBR = ({ bookingRoomId, onClose }) => {
   const [startDate, setStartDate] = useState(null);
@@ -80,7 +81,7 @@ const UpdateBR = ({ bookingRoomId, onClose }) => {
   // Save the updated booking
   const handleSave = async () => {
     if (!startDate || !endDate) {
-      alert("Silakan pilih rentang tanggal sebelum menyimpan.");
+      toast.warning("Silakan pilih rentang tanggal sebelum menyimpan.");
       return;
     }
 
@@ -138,7 +139,7 @@ const UpdateBR = ({ bookingRoomId, onClose }) => {
         />
       </div>
       <div className="d-flex justify-content-center mt-3">
-        <Button variant="primary" onClick={handleSave} className="mx-1">
+        <Button variant="primary" onClick={handleSave} className="mx-1 btn-sim-br">
           Simpan
         </Button>
       </div>

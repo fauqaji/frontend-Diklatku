@@ -1,19 +1,25 @@
 // AuthContext.js
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
+// Buat AuthContext
 export const AuthContext = createContext();
 
+// Provider untuk AuthContext
 export const AuthProvider = ({ children }) => {
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Cek token di localStorage untuk menentukan status login
   useEffect(() => {
-    const token = localStorage.getItem("adminToken");
-    setIsAdminLoggedIn(!!token);
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // Login jika token ada
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAdminLoggedIn, setIsAdminLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+// Hook untuk menggunakan AuthContext
+export const useAuth = () => useContext(AuthContext);

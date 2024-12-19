@@ -22,6 +22,11 @@ h1 {
   flex-grow: 1; /* Takes the remaining space after the sidebar */
   padding-left: 1rem; /* Optional padding */
   padding-top: 2.3rem;
+  display: flex;
+  justify-content: center;
+}
+.cont-dash-spe{
+  margin: 0 200px;
 }
 
 .card-gedung-a {

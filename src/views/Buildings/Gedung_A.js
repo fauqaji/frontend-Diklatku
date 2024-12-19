@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../../components/Sidebar/sidebar";
@@ -9,14 +9,21 @@ import UpdateClass from "../../components/UpdateClass/UpdateClass";
 const GedungA = () => {
   const [rooms, setRooms] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedRooms, setSelectedRooms] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showFloatingButton, setShowFloatingButton] = useState(false);
 
-  const fetchRooms = async () => {
+  const fetchRooms = useCallback(async () => {
     try {
+      const roomIds = selectedRooms;
+
       const response = await axios.get(
-        "http://localhost:3000/api/rooms/buildings/1"
+        "http://localhost:3000/api/rooms/buildings/1",
+        {
+          params: { room_ids: roomIds },
+        }
       );
+
       if (Array.isArray(response.data.data)) {
         const sortedRooms = response.data.data.sort((a, b) => {
           return (
@@ -25,35 +32,62 @@ const GedungA = () => {
           );
         });
 
-        // Menyimpan booking_room_id ke dalam state rooms
+        // Mapping updated rooms with necessary properties
         const updatedRooms = sortedRooms.map((room) => ({
           ...room,
-          booking_room_id: room.booking_room_id || null, // Atau cara lain untuk mengambil booking_room_id jika diperlukan
+          booking_room_id: room.booking_room_id || null,
+          status_name: room.status_name || "unknown",
         }));
 
         setRooms(updatedRooms);
       } else {
-        console.error("Data dari API tidak berbentuk array:", response.data);
+        console.error("Data from API is not in array format:", response.data);
         setRooms([]);
       }
     } catch (error) {
-      console.error("Error fetching rooms data:", error);
+      console.error("Error fetching room data:", error);
       setRooms([]);
     }
-  };
+  }, [selectedRooms]); // Include selectedRooms in dependency array for fetchRooms
 
   useEffect(() => {
-    fetchRooms(); // Fetch data on component mount
+    if (selectedRooms.length > 0) {
+      fetchRooms();
+    }
     const token = localStorage.getItem("token");
     if (token) {
       setIsLoggedIn(true); // Jika token ada, set isLoggedIn ke true
     }
     const intervalId = setInterval(() => {
-      fetchRooms(); // Fetch data every 5 seconds (5000 ms)
-    }, 2000);
+      fetchRooms();
+    }, 100);
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []);
+  }, [selectedRooms, fetchRooms]);
+
+  useEffect(() => {
+    setShowFloatingButton(selectedRooms.length > 0);
+  }, [selectedRooms]);
+
+  const toggleRoomSelection = (roomId) => {
+    if (!isLoggedIn) {
+      return; // Tidak melakukan apa-apa jika belum login
+    }
+    setSelectedRooms((prevSelected) => {
+      if (prevSelected.includes(roomId)) {
+        return prevSelected.filter((id) => id !== roomId);
+      } else {
+        return [...prevSelected, roomId];
+      }
+    });
+  };
+
+  const handleFloatingButtonClick = () => {
+    if (!isLoggedIn) {
+      return; // Tidak melakukan apa-apa jika belum login
+    }
+    setShowModal(true);
+  };
 
   const getBackgroundColor = (status) => {
     switch (status) {
@@ -107,6 +141,11 @@ const GedungA = () => {
     }
   };
 
+  const handleCancelButtonClick = () => {
+    setSelectedRooms([]); // Mengosongkan pilihan kamar
+    setShowModal(false); // Menutup modal jika terbuka
+  };
+
   const getRoomStatusCount = (filteredRooms) => {
     return filteredRooms.reduce(
       (acc, room) => {
@@ -141,13 +180,7 @@ const GedungA = () => {
   const statusC = getRoomStatusCount(roomsC);
 
   const handleRoomClick = (room) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setSelectedRoom(room);
-      setShowModal(true);
-    } else {
-      return 0;
-    }
+    toggleRoomSelection(room.room_id);
   };
 
   return (
@@ -160,7 +193,7 @@ const GedungA = () => {
           {/* Lantai 1 */}
           <div className="d-flex justify-content-between align-items-center">
             <p className="ms-2">Lantai 1 Kamar A101 - A112</p>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center gd-a">
               {Object.keys(statusA).map((status) => (
                 <div className="d-flex align-items-center me-3" key={status}>
                   <span className="me-2">{getStatusIcon(status)}</span>
@@ -175,13 +208,18 @@ const GedungA = () => {
               roomsA.map((room) => (
                 <div
                   key={room.room_id}
-                  className="room-box"
+                  className={`room-box ${
+                    selectedRooms.includes(room.room_id) ? "selected" : ""
+                  }`}
                   style={{
                     background: getBackgroundColor(room.status_name),
                     color: getTextColor(room.status_name),
                   }}
                   onClick={() => handleRoomClick(room)}
                 >
+                  {selectedRooms.includes(room.room_id) && (
+                    <i className="fa-solid fa-circle-check check-icon"></i>
+                  )}
                   <h5>{`${room.room_number}`}</h5>
                 </div>
               ))
@@ -193,7 +231,7 @@ const GedungA = () => {
           {/* Lantai 2 */}
           <div className="d-flex justify-content-between align-items-center">
             <p className="ms-2">Lantai 2 Kamar A201 - A213</p>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center gd-a">
               {Object.keys(statusB).map((status) => (
                 <div className="d-flex align-items-center me-3" key={status}>
                   <span className="me-2">{getStatusIcon(status)}</span>
@@ -208,13 +246,18 @@ const GedungA = () => {
               roomsB.map((room) => (
                 <div
                   key={room.room_id}
-                  className="room-box"
+                  className={`room-box ${
+                    selectedRooms.includes(room.room_id) ? "selected" : ""
+                  }`}
                   style={{
                     background: getBackgroundColor(room.status_name),
                     color: getTextColor(room.status_name),
                   }}
                   onClick={() => handleRoomClick(room)}
                 >
+                  {selectedRooms.includes(room.room_id) && (
+                    <i className="fa-solid fa-circle-check check-icon"></i>
+                  )}
                   <h5>{`${room.room_number}`}</h5>
                 </div>
               ))
@@ -226,7 +269,7 @@ const GedungA = () => {
           {/* Lantai 3 */}
           <div className="d-flex justify-content-between align-items-center">
             <p className="ms-2">Lantai 3 Kamar A301 - A313</p>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center gd-a">
               {Object.keys(statusC).map((status) => (
                 <div className="d-flex align-items-center me-3" key={status}>
                   <span className="me-2">{getStatusIcon(status)}</span>
@@ -241,13 +284,18 @@ const GedungA = () => {
               roomsC.map((room) => (
                 <div
                   key={room.room_id}
-                  className="room-box"
+                  className={`room-box ${
+                    selectedRooms.includes(room.room_id) ? "selected" : ""
+                  }`}
                   style={{
                     background: getBackgroundColor(room.status_name),
                     color: getTextColor(room.status_name),
                   }}
                   onClick={() => handleRoomClick(room)}
                 >
+                  {selectedRooms.includes(room.room_id) && (
+                    <i className="fa-solid fa-circle-check check-icon"></i>
+                  )}
                   <h5>{`${room.room_number}`}</h5>
                 </div>
               ))
@@ -256,21 +304,44 @@ const GedungA = () => {
             )}
           </div>
 
+          {/* Floating Button */}
+          {showFloatingButton && (
+            <div className="d-flex justify-content-center fixed-bottom mb-3 ">
+              <button
+                className="btn me-2 meB-2 btn-mult"
+                onClick={handleCancelButtonClick}
+              >
+                Batal
+              </button>
+              <button
+                className="btn btn-mult-stat"
+                onClick={handleFloatingButtonClick}
+              >
+                Pesan Kamar
+              </button>
+            </div>
+          )}
           {/* Modal */}
-          {isLoggedIn && (<Modal show={showModal} onHide={() => setShowModal(false)} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Perbarui Status</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              {selectedRoom && (
-                <UpdateClass
-                  room={selectedRoom}
-                  bookingRoomId={selectedRoom.booking_room_id} // Tambahkan booking_room_id jika diperlukan
-                  onClose={() => setShowModal(false)}
-                />
-              )}
-            </Modal.Body>
-          </Modal>
+          {isLoggedIn && (
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Perbarui Status</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {selectedRooms.length > 0 ? (
+                  <UpdateClass
+                    selectedRooms={selectedRooms} // Kirim daftar kamar ke komponen UpdateClass
+                    rooms={rooms}
+                    onClose={() => {
+                      setShowModal(false);
+                      setSelectedRooms([]); // Reset daftar kamar setelah modal ditutup
+                    }}
+                  />
+                ) : (
+                  <p>Tidak ada kamar yang dipilih.</p>
+                )}
+              </Modal.Body>
+            </Modal>
           )}
         </div>
       </div>

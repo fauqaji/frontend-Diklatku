@@ -4,7 +4,6 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
   Navbar,
-  Container,
 } from "reactstrap";
 
 function ExamplesNavbar() {
@@ -43,7 +42,7 @@ function ExamplesNavbar() {
         />
       ) : null}
       <Navbar className={"fixed-top " + navbarColor} color="info" expand="lg">
-        <Container>
+        <div>
           <UncontrolledDropdown className="button-dropdown">
             <DropdownToggle
               caret
@@ -55,7 +54,7 @@ function ExamplesNavbar() {
               <i className="fas fa-home fa-lg"></i> {/* Adjust the size here */}
             </DropdownToggle>
           </UncontrolledDropdown>
-        </Container>
+        </div>
       </Navbar>
     </>
   );
