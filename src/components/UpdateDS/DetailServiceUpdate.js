@@ -28,7 +28,7 @@ const DetailServiceUpdate = ({ show, handleClose, id }) => {
 
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/detailService/${id}`
+          `/api/detailService/${id}`
         );
         setService(response.data.data);
 
@@ -110,7 +110,7 @@ const DetailServiceUpdate = ({ show, handleClose, id }) => {
 
     try {
       await axios.put(
-        `http://localhost:3000/api/detailService/${id}`,
+        `/api/detailService/${id}`,
         formData,
         {
           headers: {

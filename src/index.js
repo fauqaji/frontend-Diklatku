@@ -18,12 +18,14 @@ import PemesananBR from "./views/PemesananBR/PemesananBR.js";
 import DetailServiceUpdate from "./components/UpdateDS/DetailServiceUpdate.js";
 import { AuthProvider } from "./components/context/AuthContext"; // Path sesuai dengan lokasi AuthContext
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.js"; // Path sesuai lokasi PrivateRoute.js
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3000"; // Ganti dengan base URL yang sesuai
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login-page" element={<LoginPage />} />
@@ -57,6 +59,6 @@ root.render(
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </BrowserRouter>
 );

@@ -25,7 +25,7 @@ const Dashboard = () => {
     const fetchBuildings = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/buildingsMon"
+          "/api/buildingsMon"
         );
         if (response.data && response.data.data) {
           setBuildings(response.data.data.slice(0, 3));
@@ -40,7 +40,7 @@ const Dashboard = () => {
     const fetchRoomsC = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/rooms/buildings/3"
+          "/api/rooms/buildings/3"
         );
         setRoomsC(response.data.data); // Simpan data rooms ke state
       } catch (err) {
@@ -52,7 +52,7 @@ const Dashboard = () => {
       
       try {
         setHistory([]);
-        const response = await axios.get("http://localhost:3000/api/history", {
+        const response = await axios.get("/api/history", {
           params: {
             page: currentPage,
             limit: itemsPerPage, // Kirim jumlah item per halaman

@@ -26,7 +26,7 @@ const PemesananBR = () => {
     async (name, page) => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/booking-rooms",
+          "/api/booking-rooms",
           {
             params: {
               buildingName: name || buildingName,
@@ -140,7 +140,7 @@ const PemesananBR = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/booking-rooms/${id}`, {
+      await axios.delete(`/api/booking-rooms/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

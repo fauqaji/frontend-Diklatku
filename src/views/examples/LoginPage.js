@@ -43,7 +43,7 @@ function LoginPage() {
     try {
       // Mengirim permintaan login
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "/api/auth/login",
         { email, password }
       );
 

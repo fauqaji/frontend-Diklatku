@@ -35,7 +35,7 @@ const UpdateClass = ({ selectedRooms, rooms, onClose }) => {
         // Loop untuk setiap room_id yang dipilih dan ambil tanggal bookingnya
         for (const roomId of roomIds) {
           const response = await axios.get(
-            `http://localhost:3000/api/booking-rooms/cektanggal/${roomId}`,
+            `/api/booking-rooms/cektanggal/${roomId}`,
             { headers }
           );
           // console.log(`Response for Room ID ${roomId}:`, response.data.data);
@@ -187,7 +187,7 @@ const UpdateClass = ({ selectedRooms, rooms, onClose }) => {
         const roomData = { status_id: statusId };
 
         await axios.put(
-          "http://localhost:3000/api/rooms/multruang",
+          "/api/rooms/multruang",
           { roomIds, roomData },
           { headers }
         );
@@ -201,7 +201,7 @@ const UpdateClass = ({ selectedRooms, rooms, onClose }) => {
         };
 
         await axios.post(
-          "http://localhost:3000/api/booking-rooms/multruang",
+          "/api/booking-rooms/multruang",
           bookingData,
           { headers }
         );

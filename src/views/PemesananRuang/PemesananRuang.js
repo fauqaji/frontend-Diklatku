@@ -33,7 +33,7 @@ const PemesananRuang = () => {
       try {
         if (!bookingRoomId) return;
         const response = await axios.get(
-          `http://localhost:3000/api/booking-details/${bookingRoomId}`,
+          `/api/booking-details/${bookingRoomId}`,
           {
             params: {
               page: currentPage,
@@ -134,7 +134,7 @@ const PemesananRuang = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/booking-rooms/${id}`, {
+      await axios.delete(`/api/booking-rooms/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

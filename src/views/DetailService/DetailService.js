@@ -27,7 +27,7 @@ const DetailService = () => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/detailService"
+          "/api/detailService"
         );
         if (response.data.status === "sukses") {
           setServices(response.data.data);

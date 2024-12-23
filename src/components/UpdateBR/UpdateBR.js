@@ -20,7 +20,7 @@ const UpdateBR = ({ bookingRoomId, onClose }) => {
           const headers = { Authorization: `Bearer ${token}` };
 
           const response = await axios.get(
-            `http://localhost:3000/api/booking-rooms/tanggalbr/${bookingRoomId}`,
+            `/api/booking-rooms/tanggalbr/${bookingRoomId}`,
             { headers }
           );
 
@@ -100,7 +100,7 @@ const UpdateBR = ({ bookingRoomId, onClose }) => {
       };
 
       await axios.put(
-        `http://localhost:3000/api/booking-rooms/${bookingRoomId}`,
+        `/api/booking-rooms/${bookingRoomId}`,
         bookingData,
         { headers }
       );

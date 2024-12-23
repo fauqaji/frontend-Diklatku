@@ -18,7 +18,7 @@ const AreaC = () => {
       const roomIds = selectedRooms;
 
       const response = await axios.get(
-        "http://localhost:3000/api/rooms/buildings/3",
+        "/api/rooms/buildings/3",
         {
           params: { room_ids: roomIds },
         }
