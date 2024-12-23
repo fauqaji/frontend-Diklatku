@@ -278,22 +278,22 @@ span {
 }
 
 .btn-bat-pbr:hover {
-  background-color: #ffffff;
-  color: #333333;
+  background-color: #ffffff !important;
+  color: #333333 !important;
   border: 1px solid #bf252b;
   transform: scale(1.01);
 }
 
 .btn-bat-pbr:active {
-  background-color: #ffffff !important;
-  color: #333333;
+  background-color: #ffffff ;
+  color: #333333 !important;
   border: 1px solid #bf252b;
   transform: scale(0.98);
 }
 
 .btn-bat-pbr:focus {
   background-color: #ffffff !important;
-  color: #333333;
+  color: #333333 !important;
   border: 1px solid #bf252b;
   outline: none;
 }

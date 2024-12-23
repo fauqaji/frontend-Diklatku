@@ -103,7 +103,7 @@ function IndexHeader() {
               </span>
             </a>
             <a
-              href="https://wa.me/+62243586680"
+              href="https://wa.me/+6282223000404"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -120,9 +120,7 @@ function IndexHeader() {
                   marginRight: "8px",
                 }}
               ></i>
-              <span style={{ color: "white" }}>
-                (024) 358-66-80 / 673-13-98
-              </span>
+              <span style={{ color: "white" }}>+62 822-2300-0404</span>
             </a>
           </h6>
         </Container>

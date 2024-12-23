@@ -112,7 +112,7 @@ const DetailService = () => {
   };
 
   const handlePesanSekarang = () => {
-    window.open("https://wa.me/+62243586680", "_blank");
+    window.open("https://wa.me/+6282223000404", "_blank");
   };
 
   return (
