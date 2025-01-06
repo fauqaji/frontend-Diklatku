@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import "../css/deskImg.css";
 
 function Images() {
@@ -58,57 +58,65 @@ function Images() {
 
   return (
     <div id="image-sect" className="image-section-wrapper">
-      <div className="imgsec-container">
-        <h1
-          className={`text-center judul-imgsec ${
-            playAnimation ? "fade-in" : ""
-          }`}
-        >
-          SEWA BALAI DIKLAT <span>KOTA SEMARANG</span>
-        </h1>
-        <p
-          className={`text-center desk-imgsec ${
-            playAnimation ? "fade-in" : ""
-          }`}
-        >
-          Selamat datang di Balai Diklat Pemerintah Kota Semarang, tempat ideal
-          untuk berbagai kegiatan pelatihan, seminar, dan acara resmi. Dengan
-          fasilitas modern, ruang yang luas, dan lokasi strategis, kami siap
-          mendukung kesuksesan acara Anda. Dapatkan kenyamanan, keamanan, dan
-          layanan terbaik di setiap kesempatan. Pesan sekarang dan rasakan
-          pengalaman terbaik untuk kegiatan Anda!
-        </p>
-        <div className="section-images">
-          <Container className="deskimg-cont">
-            <Row className="justify-content-center align-items-center">
-              <button className="carousel-control-prev" onClick={handlePrev}>
-                <span className="carousel-control-icon">&#9664;</span>
-              </button>
-              {currentImages.map((image, index) => (
-                <Col
-                  md="auto"
-                  key={index}
-                  className={`carousel-img-wrapper ${
-                    index === 1 ? "active-carousel-img" : ""
-                  }`}
-                >
-                  <img
-                    className={`carousel-img ${
-                      index === 1 ? "active-img" : ""
-                    }`}
-                    src={image.src}
-                    alt={image.alt}
-                    loading="lazy"
-                  />
-                </Col>
-              ))}
-              <button className="carousel-control-next" onClick={handleNext}>
-                <span className="carousel-control-icon">&#9654;</span>
-              </button>
-            </Row>
-          </Container>
-        </div>
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            <h1
+              className={`text-center judul-imgsec ${
+                playAnimation ? "fade-in" : ""
+              }`}
+            >
+              SEWA BALAI DIKLAT <span>KOTA SEMARANG</span>
+            </h1>
+            <p
+              className={`text-center desk-imgsec ${
+                playAnimation ? "fade-in" : ""
+              }`}
+            >
+              Selamat datang di Balai Diklat Pemerintah Kota Semarang, tempat
+              ideal untuk berbagai kegiatan pelatihan, seminar, dan acara resmi.
+              Dengan fasilitas modern, ruang yang luas, dan lokasi strategis,
+              kami siap mendukung kesuksesan acara Anda. Dapatkan kenyamanan,
+              keamanan, dan layanan terbaik di setiap kesempatan. Pesan sekarang
+              dan rasakan pengalaman terbaik untuk kegiatan Anda!
+            </p>
+          </Col>
+        </Row>
+        <Row className="section-images justify-content-center align-items-center flex-nowrap">
+          <Button
+            variant="link"
+            className="carousel-control-prev"
+            onClick={handlePrev}
+          >
+            <span className="carousel-control-icon">&#9664;</span>
+          </Button>
+          <div className="d-flex justify-content-center img-car-desk">
+            {currentImages.map((image, index) => (
+              <Col
+                key={index}
+                xs="auto"
+                className={`carousel-img-wrapper ${
+                  index === 1 ? "active-carousel-img" : ""
+                }`}
+              >
+                <img
+                  className={`carousel-img ${index === 1 ? "active-img" : ""}`}
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                />
+              </Col>
+            ))}
+          </div>
+          <Button
+            variant="link"
+            className="carousel-control-next"
+            onClick={handleNext}
+          >
+            <span className="carousel-control-icon">&#9654;</span>
+          </Button>
+        </Row>
+      </Container>
     </div>
   );
 }
