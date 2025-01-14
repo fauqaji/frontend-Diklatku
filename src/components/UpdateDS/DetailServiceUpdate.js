@@ -27,9 +27,7 @@ const DetailServiceUpdate = ({ show, handleClose, id }) => {
       }
 
       try {
-        const response = await axios.get(
-          `/api/detailService/${id}`
-        );
+        const response = await axios.get(`/api/detailService/${id}`);
         setService(response.data.data);
 
         if (Array.isArray(response.data.data.foto)) {
@@ -109,16 +107,12 @@ const DetailServiceUpdate = ({ show, handleClose, id }) => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.put(
-        `/api/detailService/${id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.put(`/api/detailService/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       handleClose();
       window.location.reload();
     } catch (error) {
@@ -242,14 +236,15 @@ const DetailServiceUpdate = ({ show, handleClose, id }) => {
               )}
             </div>
           </div>
-
-          <Button
-            className="text-center button-upd"
-            variant="primary"
-            type="submit"
-          >
-            Update
-          </Button>
+          <div className="d-flex justify-content-center align-items-center">
+            <Button
+              className="text-center button-upd-DS"
+              variant="primary"
+              type="submit"
+            >
+              Update
+            </Button>
+          </div>
         </form>
       </Modal.Body>
       <ToastContainer />
